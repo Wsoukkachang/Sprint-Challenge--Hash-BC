@@ -29,7 +29,7 @@ API Endpoints:
 
 `/api/mine`
 POST - Submit your name and a proposed proof for validation.  If the action is unsuccessful, you will receive an error message.  If successful, it will return:
-
+pyrtho
 {
     'index': block.index,
     'transactions': str(block.transactions),

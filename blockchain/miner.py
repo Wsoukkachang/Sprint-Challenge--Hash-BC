@@ -1,6 +1,6 @@
 import hashlib
 import requests
-
+import json
 import sys
 
 from uuid import uuid4
@@ -26,9 +26,11 @@ def proof_of_work(last_proof):
     proof = 0
     #  TODO: Your code here
 
+    while valid_proof(last_proof, proof) is False:
+        proof += 1
+
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
-
 
 def valid_proof(last_hash, proof):
     """
@@ -40,8 +42,17 @@ def valid_proof(last_hash, proof):
     """
 
     # TODO: Your code here!
-    pass
 
+    # grab the last hash, encode, then hash out
+    last_encode = f"{last_hash}".encode()
+    last_hash = hashlib.sha256(last_encode).hexdigest()
+
+    # grab proof, encode, then hash
+    proof_encode = f"{proof}".encode()
+    proof_hash = hashlib.sha256(proof_encode).hexdigest()
+
+    # check and see if proof (first 6) and last hash (last six) are the same
+    return proof_hash[:6] == last_hash[-6:]
 
 if __name__ == '__main__':
     # What node are we interacting with?
